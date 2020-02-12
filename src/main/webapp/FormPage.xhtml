@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+    </h:head>
+    <h:body>
+
+        <div class="container">
+
+            <h:form>
+                <input type="hidden" name="surveyId" value="#{formBean.surveyId}"/>
+                <input type="hidden" name="formId" value="#{formBean.form.formId}"/>
+                <h:outputLabel value="Anketörün" styleClass="p-md-2"/>
+
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Adı :"/>
+                    <h:inputText value="#{formBean.form.pollsterName}"/>
+                    <h:outputLabel value="Soyadı :"/>
+                    <h:inputText value="#{formBean.form.pollsterSurname}"/>
+                </h:panelGrid>
+
+                <h:outputLabel value="Ankete Katılanın" styleClass="p-md-2"/>
+
+                <h:dataTable value="#{formBean.form.answers}" var="answer">
+                    <h:column>
+                        <h:outputText value="#{answer.question.questionText}"/>
+                    </h:column>
+                    <h:column>
+                        <h:panelGroup rendered="#{answer.question.questionType == 1}">
+                            Sicim 
+                            <h:inputText value="#{answer.answerValue}"/>
+                        </h:panelGroup> 
+                        <h:panelGroup rendered="#{answer.question.questionType == 2}">
+                            Opsiyon
+                            <h:selectOneRadio value="#{answer.answerValue}" >
+                                <f:selectItems value="#{answer.question.questionValuesArray}"/>  
+                            </h:selectOneRadio>
+                        </h:panelGroup> 
+                        <h:panelGroup rendered="#{answer.question.questionType == 3}">
+                            Tarih 
+                            <h:inputText value="#{answer.answerValue}">
+                                <f:convertDateTime type="date" pattern="dd.mm.yyyy"/>
+
+                            </h:inputText>
+                        </h:panelGroup> 
+
+                    </h:column>
+                </h:dataTable>
+
+                <h:commandLink value="Kaydet" action="#{formBean.save()}"/>
+                <br></br>
+                <h:commandLink value="Sil" action="#{formBean.delete()}"/>
+
+
+            </h:form>
+
+        </div>
+
+    </h:body>
+</html>
+

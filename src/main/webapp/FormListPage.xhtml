@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+    </h:head>
+    <h:body>
+        <div class="container-fluid">
+
+            <h:form>
+                <input type="hidden" name="surveyId" value="#{formBean.surveyId}"/>
+                <h:dataTable styleClass="table table-striped thead-light" 
+                             value ="#{formListBean.formList}"
+                             var="form"
+                             border="2">
+
+                    <h:column>
+                        <f:facet name ="header">
+                            <h:outputLabel value="Form Kimliği"/>
+                        </f:facet>
+                        <h:outputText value="#{form.formId}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name ="header">
+                            <h:outputLabel value="Anketör Adı"/>
+                        </f:facet>
+                        <h:outputText value="#{form.pollsterName}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name ="header">
+                            <h:outputLabel value="Anketör Soyadı"/>
+                        </f:facet>
+                        <h:outputText value="#{form.pollsterSurname}"/>
+                    </h:column>
+                    <h:column>
+                        <h:commandLink action="FormPage.xhtml"> 
+                            Güncelle
+                            <f:param name="formId" value="#{form.formId}"/>
+                        </h:commandLink>             
+                    </h:column>    
+                    <h:column>
+                        <h:commandLink action="FormPage.xhtml">
+                            Sil
+                            <f:param name="formId" value="#{form.formId}"/>
+                        </h:commandLink>
+                    </h:column>
+
+                </h:dataTable>
+
+                <h:commandLink  action="FormPage.xhtml">
+                    Anket Ekle
+                    <f:param name="surveyId" value="#{form.survey.surveyId}"/>
+                </h:commandLink>
+                <br></br>
+
+                <a href="SurveySummaryPage.xhtml"  class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Ana Sayfa</a>
+
+            </h:form>
+        </div>
+    </h:body>
+</html>
+
